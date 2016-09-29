@@ -1,0 +1,4 @@
+{
+  "PUBLIC_FOLDER": "views",
+  "TEMPLATE_EXT": "mustache"
+}
