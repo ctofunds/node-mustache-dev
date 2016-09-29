@@ -41,7 +41,7 @@ function render (pathname) {
  */
 function resolveAvailableTemplate (pathname) {
   return attempts.sync(p => {
-    fs.accessSync(p, fs.constants.R_OK)
+    fs.accessSync(p, fs.R_OK)
     return p.replace(new RegExp(TEMPLATE_EXT + '$'), '')
   }, [
     path.join(__dirname, PUBLIC_FOLDER, pathname + '.' + TEMPLATE_EXT),
