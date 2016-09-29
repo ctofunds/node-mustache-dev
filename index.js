@@ -6,9 +6,10 @@ const attempts = require('attempts')
 
 // const PUBLIC_FOLDER = 'views'
 // const TEMPLATE_EXT = 'mustache'
-const { PUBLIC_FOLDER, TEMPLATE_EXT } = require('./config.json')
+const { PUBLIC_FOLDER, TEMPLATE_EXT, DEBUG } = require('./config.json')
 
 module.exports = function (req, res) {
+  DEBUG && console.log('\nREQUEST PATH  :', req.url)
   const pathname = req.url.replace(/(^\/)*(\/$)*/g, '') // trim '/'
 
   switch (pathname) {
@@ -22,9 +23,11 @@ module.exports = function (req, res) {
 function render (pathname) {
   const p = resolveAvailableTemplate(pathname)
   if (!p) return ''
+  DEBUG && console.log('FOUND TEMPLATE:', p + TEMPLATE_EXT)
 
   const tmpl = fs.readFileSync(p + TEMPLATE_EXT, 'utf-8')
   const data = attempts.sync(p => require(p), [p + 'json', p + 'data.js'])
+  DEBUG && console.log('RENDER DATA   :', data)
   return Mustache.render(tmpl, data)
 }
 
