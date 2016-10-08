@@ -16,11 +16,11 @@
 
 ### 配置
 
-- 默认端口 3002  
-  `package.json` -> `"start": "micro"`
+- 默认端口 "3002"  
+  `package.json` -> `"start": "micro index.js -p 3002"`
 
-- 默认公共目录 views  
+- 默认公共目录 "views"  
   `config.json` -> `"PUBLIC_FOLDER": "views"`
 
-- 默认模板文件后缀 mustache  
+- 默认模板文件后缀 "mustache"  
   `config.json` -> `"TEMPLATE_EXT": "mustache"`

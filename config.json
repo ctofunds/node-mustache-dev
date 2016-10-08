@@ -1,5 +1,5 @@
 {
   "DEBUG": true,
-  "PUBLIC_FOLDER": "views",
+  "PUBLIC_FOLDER": "public",
   "TEMPLATE_EXT": "mustache"
 }

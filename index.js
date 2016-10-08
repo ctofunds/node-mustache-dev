@@ -12,11 +12,25 @@ module.exports = function (req, res) {
   DEBUG && console.log('\nREQUEST PATH  :', req.url)
   const pathname = req.url.replace(/(^\/)*(\/$)*/g, '') // trim '/'
 
-  switch (pathname) {
-    case 'favicon.ico':
-      return send(res, 200)
-    default:
-      return send(res, 200, render(pathname) || 'no-matched-template-file')
+  if (pathname === 'favicon.ico') return send(res, 200)
+
+  const content = render(pathname)
+  if (content) return send(res, 200, content)
+
+  const file = readFile(pathname)
+  if (file) return send(res, 200, file)
+
+  return send(res, 404)
+}
+
+function readFile (pathname) {
+  try {
+    const p = path.join(__dirname, PUBLIC_FOLDER, pathname)
+    DEBUG && console.log('SERVE FILE    :', p)
+    return fs.readFileSync(p, { encoding: 'utf-8' })
+  } catch (e) {
+    DEBUG && console.error('404 NOT FOUND :', pathname)
+    return ''
   }
 }
 
@@ -40,9 +54,12 @@ function render (pathname) {
  * @return {String|undefined}
  */
 function resolveAvailableTemplate (pathname) {
+  const tmplPattern = new RegExp(TEMPLATE_EXT + '$')
   return attempts.sync(p => {
-    fs.accessSync(p, fs.R_OK)
-    return p.replace(new RegExp(TEMPLATE_EXT + '$'), '')
+    if (tmplPattern.test(p)) {
+      fs.accessSync(p, fs.R_OK)
+      return p.replace(new RegExp(TEMPLATE_EXT + '$'), '')
+    }
   }, [
     path.join(__dirname, PUBLIC_FOLDER, pathname + '.' + TEMPLATE_EXT),
     path.join(__dirname, PUBLIC_FOLDER, pathname, 'index.' + TEMPLATE_EXT),
