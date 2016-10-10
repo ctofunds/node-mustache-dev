@@ -4,14 +4,17 @@
   "description": "node mustache dev server",
   "main": "index.js",
   "scripts": {
-    "start": "micro index.js -p 3002",
+    "debug": "node --inspect --debug-brk start.js",
+    "start": "node start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "ctofunds/node-mustache-dev",
   "license": "ISC",
   "dependencies": {
+    "async-to-gen": "^1.1.4",
     "attempts": "0.0.0",
-    "micro": "^6.0.2",
+    "koa": "^2.0.0-alpha.7",
+    "koa-static": "^3.0.0",
     "mustache": "^2.2.1"
   }
 }

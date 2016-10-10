@@ -1,5 +1,6 @@
 {
   "DEBUG": true,
   "PUBLIC_FOLDER": "public",
-  "TEMPLATE_EXT": "mustache"
+  "TEMPLATE_EXT": "mustache",
+  "PORT": 3002
 }
